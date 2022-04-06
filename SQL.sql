@@ -1,11 +1,12 @@
+DROP TABLE conges, conges_mens, employes, services;
 CREATE TABLE employes
 (
 	code_emp INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nom VARCHAR(20) NOT NULL,
     prenom VARCHAR(20) NOT NULL,
     date_naissance DATE,
-    date_embauche DATE,
-    salaire DECIMAL(8,2) NOT NULL,
+    date_embauche DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    salaire DECIMAL(8,2) NOT NULL DEFAULT 0,
     code_service CHAR(5) NOT NULL,
     code_chef INT
     
