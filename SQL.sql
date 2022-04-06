@@ -14,17 +14,8 @@ CREATE TABLE employes
 
 CREATE TABLE services 
 (
-    id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	code_service CHAR(5) NOT NULL,
+	code_service CHAR(5) PRIMARY KEY,
     libelle VARCHAR(30) NOT NULL
-);
-
-CREATE TABLE conges_mens
-(
-	code_emp INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    annee NUMERIC(4,0) NOT NULL,
-    mois NUMERIC(2,0) NOT NULL,
-    nb_jours_pris NUMERIC(2,0) DEFAULT 0
 );
 
 CREATE TABLE conges
@@ -32,4 +23,12 @@ CREATE TABLE conges
 	code_emp INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     annee NUMERIC(4,0) NOT NULL,
     nb_jours_acquis NUMERIC(2,0) DEFAULT 30
+);
+
+CREATE TABLE conges_mens
+(
+	code_emp INT PRIMARY KEY AUTO_INCREMENT,
+    annee NUMERIC(4,0) PRIMARY KEY,
+    mois NUMERIC(2,0) PRIMARY KEY,
+    nb_jours_pris NUMERIC(2,0) DEFAULT 0
 );
