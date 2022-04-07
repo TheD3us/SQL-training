@@ -1,9 +1,10 @@
-DROP TABLE conges, conges_mens, employes, services;
+DROP TABLE  conges_mens,conges, employes, services;
 
-
-
-
-
+CREATE TABLE services 
+(
+	code_service CHAR(5) PRIMARY KEY,
+    libelle VARCHAR(30) NOT NULL
+);
 
 CREATE TABLE employes
 (
@@ -15,16 +16,14 @@ CREATE TABLE employes
     salaire DECIMAL(8,2) NOT NULL DEFAULT 0,
     code_service CHAR(5) NOT NULL,
     code_chef INT,
-    CONSTRAINT FK_employe_service FOREIGN KEY (code_service) REFERENCES services(code_service),
-    CONSTRAINT FK_employe_employe FOREIGN KEY (code_emp) REFERENCES employes(code_emp)
+    CONSTRAINT FK_employe_service FOREIGN KEY (code_service) REFERENCES services(code_service)
+    
     
 );
 
-CREATE TABLE services 
-(
-	code_service CHAR(5) PRIMARY KEY,
-    libelle VARCHAR(30) NOT NULL
-);
+ALTER TABLE employes ADD
+CONSTRAINT FK_employe_employe FOREIGN KEY (code_chef) 
+REFERENCES employes(code_emp);
 
 CREATE TABLE conges
 (
@@ -47,9 +46,23 @@ CREATE TABLE conges_mens
 );
 
 
+
+
 /*
 
 ==============================================================================================
+ALTER TABLE employes DROP
+FOREIGN KEY FK_employes_codeservice ;
+
+ALTER TABLE employes DROP
+FOREIGN KEY FK_employes_codechef;
+
+ALTER TABLE conges DROP
+FOREIGN KEY FK_conges_employes;
+
+ALTER TABLE conges_mens DROP
+FOREIGN KEY FK_conges_congesmens;
+
 ALTER TABLE employes ADD
 CONSTRAINT FK_employes_codeservice FOREIGN KEY (code_service)
 REFERENCES services(code_service);
