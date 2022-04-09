@@ -62,6 +62,53 @@ CREATE TABLE conges_mens
 
 
 /*
+SELECT nom, prenom, cm.annee, c.nb_jours_acquis - SUM(nb_jours_pris) jours_restants
+	FROM employes e, conges c, conges_mens cm
+	WHERE e.code_emp = c.code_emp
+		AND c.code_emp = cm.code_emp
+		AND c.annee = cm.annee
+		AND c.annee = 2006
+    GROUP BY nom, prenom, cm.annee
+    HAVING jours_restants > 10;
+	
+==============================================================================================
+TP 8
+
+Requete 1 
+
+SELECT nom, prenom, adresse, cpo, ville FROM clients AS c
+LEFT JOIN fiches as f ON f.no_cli = c.no_cli WHERE etat = 'EC';
+
+Requete 2
+
+SELECT nom, prenom, ville, designation,depart, retour FROM clients as c 
+LEFT JOIN fiches AS f ON c.no_cli = f.no_cli
+LEFT JOIN lignesfic AS lf ON lf.no_fic = f.no_fic
+RIGHT JOIN articles AS a ON a.refart = lf.refart
+WHERE nom = 'Dupond' AND prenom = 'Jean' AND ville = 'Paris';
+
+Requete 3
+
+SELECT refart, designation, libelle FROM articles AS a
+LEFT JOIN categories AS c ON a.code_cate = c.code_cate
+WHERE libelle LIKE '%ski%';
+
+Requete 4
+
+SELECT f.no_fic, etat,SUM((prix_jour * (DATEDIFF(retour, depart)+1))) AS total FROM fiches AS f
+LEFT JOIN lignesfic AS lf ON f.no_fic = lf.no_fic
+LEFT JOIN articles AS a ON a.refart = lf.refart
+LEFT JOIN grilletarifs AS g ON g.code_gam = a.code_gam AND g.code_cate = a.code_cate
+LEFT JOIN tarifs AS t ON t.code_tarif = g.code_tarif
+WHERE etat = 'SO'
+GROUP BY no_fic
+
+Requete 5 
+
+SELECT COUNT(f.no_fic), etat FROM fiches AS f 
+LEFT JOIN lignesfic AS lf ON f.no_fic = lf.no_fic
+LEFT JOIN articles AS a ON a.refart = lf.refart
+WHERE retour IS NULL;
 
 ==============================================================================================
 ALTER TABLE employes DROP
