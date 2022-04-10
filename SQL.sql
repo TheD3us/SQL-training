@@ -119,15 +119,14 @@ GROUP BY nom, prenom;
 
 Requete 7
 
-SELECT nom, prenom, SUM((prix_jour * (DATEDIFF(retour, depart)+1))) AS total FROM clients AS c
-CROSS JOIN fiches AS f ON c.no_cli = f.no_cli
+SELECT nom, prenom, SUM((prix_jour * (DATEDIFF(IFNULL(retour, CURRENT_TIMESTAMP), depart)+1))) AS total FROM clients AS c
+INNER JOIN fiches AS f ON c.no_cli = f.no_cli
 INNER JOIN lignesfic AS lf ON f.no_fic = lf.no_fic
 INNER JOIN articles AS a ON a.refart = lf.refart
 INNER JOIN grilletarifs AS g ON g.code_gam = a.code_gam AND g.code_cate = a.code_cate
 INNER JOIN tarifs AS t ON t.code_tarif = g.code_tarif 
-GROUP BY c.no_cli;
--- HAVING total > 200;
-
+GROUP BY c.no_cli
+HAVING total > 200;
 ==============================================================================================
 ALTER TABLE employes DROP
 FOREIGN KEY FK_employes_codeservice ;
